@@ -1,3 +1,9 @@
 spring:
   application:
     name: kill-batch-system
+  batch:
+    job:
+      enabled: true
+      name: systemTerminationSimulationJob
+    jdbc:
+      initialize-schema: always

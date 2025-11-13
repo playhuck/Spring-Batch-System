@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.5.7'
 	id 'io.spring.dependency-management' version '1.1.7'
+//    id 'application'
 }
 
 group = 'com.system.batch'
@@ -21,6 +22,7 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-json'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     implementation 'org.springframework.batch:spring-batch-core:5.2.2'
@@ -34,6 +36,10 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok:1.18.30'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
 }
+
+//application {
+//    mainClass = 'org.springframework.batch.core.launch.support.CommandLineJobRunner'
+//}
 
 tasks.named('test') {
 	useJUnitPlatform()
