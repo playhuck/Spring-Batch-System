@@ -9,10 +9,10 @@ import org.springframework.context.annotation.Configuration;
  * 내부적으로 ObjectMapper를 사용해 JSON 형태의 파라미터 표기를 해석한다.
  */
 @Configuration
-public class JobParametersConverter {
+public class JobParametersConverterConfig {
 
     @Bean
-    public JsonJobParametersConverter jsonJobParametersConverter() {
+    public JsonJobParametersConverter jobParametersConverter() {
         return new JsonJobParametersConverter();
     }
 }

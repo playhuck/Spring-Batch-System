@@ -50,6 +50,8 @@
 //            @Value("#{jobParameters['questDifficulty']}") QuestDifficulty questDifficulty
 //    ) {
 //
+//        log.info("questDifficulty : {}", questDifficulty);
+//
 //        return ((contribution, chunkContext) -> {
 //            log.info("⚔️ 시스템 침투 작전 개시!");
 //            log.info("임무 난이도: {}", questDifficulty);
