@@ -8,6 +8,9 @@ import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.file.FlatFileItemWriter;
 import org.springframework.batch.item.file.builder.FlatFileItemWriterBuilder;
+import org.springframework.batch.item.json.JacksonJsonObjectMarshaller;
+import org.springframework.batch.item.json.JsonFileItemWriter;
+import org.springframework.batch.item.json.builder.JsonFileItemWriterBuilder;
 import org.springframework.batch.item.support.ListItemReader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -35,12 +38,12 @@ public class DeathNoteWriteJobConfig {
             JobRepository jobRepository,
             PlatformTransactionManager transactionManager,
             ListItemReader<DeathNote> deathNoteListReader,
-            FlatFileItemWriter<DeathNote> deathNoteWriter
+            JsonFileItemWriter<DeathNote> deathNoteJsonWriter
     ) {
         return new StepBuilder("deathNoteWriteStep", jobRepository)
                 .<DeathNote, DeathNote>chunk(10, transactionManager)
                 .reader(deathNoteListReader)
-                .writer(deathNoteWriter)
+                .writer(deathNoteJsonWriter)
                 .build();
     }
 
@@ -80,6 +83,17 @@ public class DeathNoteWriteJobConfig {
                 .names("victimId", "executionDate", "victimName", "causeOfDeath")
                 .headerCallback(writer -> writer.write("================= 처형 기록부 ================="))
                 .footerCallback(writer -> writer.write("================= 처형 완료 =================="))
+                .build();
+    }
+
+    @Bean
+    @StepScope
+    public JsonFileItemWriter<DeathNote> deathNoteJsonWriter(
+            @Value("#{jobParameters['outputDir']}") String outputDir) {
+        return new JsonFileItemWriterBuilder<DeathNote>()
+                .jsonObjectMarshaller(new JacksonJsonObjectMarshaller<>())
+                .resource(new FileSystemResource(outputDir + "/death_notes.json"))
+                .name("logEntryJsonWriter")
                 .build();
     }
 

@@ -8,9 +8,9 @@ import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
-import org.springframework.batch.item.file.FlatFileItemReader;
-import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
-import org.springframework.batch.item.file.separator.JsonRecordSeparatorPolicy;
+import org.springframework.batch.item.json.JacksonJsonObjectReader;
+import org.springframework.batch.item.json.JsonItemReader;
+import org.springframework.batch.item.json.builder.JsonItemReaderBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,7 +34,7 @@ public class SystemDeathJobConfig {
 
     @Bean
     public Step systemDeathStep(
-            FlatFileItemReader<SystemDeath> systemDeathReader
+            JsonItemReader<SystemDeath> systemDeathReader
     ) {
         return new StepBuilder("systemDeathStep", jobRepository)
                 .<SystemDeath, SystemDeath>chunk(10, transactionManager)
@@ -45,13 +45,12 @@ public class SystemDeathJobConfig {
 
     @Bean
     @StepScope
-    public FlatFileItemReader<SystemDeath> systemDeathReader(
+    public JsonItemReader<SystemDeath> systemDeathReader(
             @Value("#{jobParameters['inputFile']}") String inputFile) {
-        return new FlatFileItemReaderBuilder<SystemDeath>()
+        return new JsonItemReaderBuilder<SystemDeath>()
                 .name("systemDeathReader")
+                .jsonObjectReader(new JacksonJsonObjectReader<>(SystemDeath.class))
                 .resource(new FileSystemResource(inputFile))
-                .lineMapper((line, lineNumber) -> objectMapper.readValue(line, SystemDeath.class))
-                .recordSeparatorPolicy(new JsonRecordSeparatorPolicy())
                 .build();
     }
 
