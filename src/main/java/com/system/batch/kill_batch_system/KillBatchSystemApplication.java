@@ -17,14 +17,14 @@ public class KillBatchSystemApplication {
 	}
 
     @Bean
-    public CommandLineRunner runner(JobLauncher jobLauncher, Job deathNoteWriteJob) {
+    public CommandLineRunner runner(JobLauncher jobLauncher, Job systemDeathJob) {
         return args -> {
             JobParameters params = new JobParametersBuilder()
-                    .addString("outputDir", "./")
+                    .addString("inputFile", "system_death.jsonl")
                     .addLong("timestamp", System.currentTimeMillis()) // 유니크하게 만들기
                     .toJobParameters();
 
-            jobLauncher.run(deathNoteWriteJob, params);
+            jobLauncher.run(systemDeathJob, params);
         };
     }
 
