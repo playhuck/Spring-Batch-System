@@ -1,4 +1,4 @@
-package com.system.batch.kill_batch_system.chunk;
+package com.system.batch.kill_batch_system.chunk.reader;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

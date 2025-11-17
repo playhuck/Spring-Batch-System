@@ -17,15 +17,41 @@ public class KillBatchSystemApplication {
 	}
 
     @Bean
-    public CommandLineRunner runner(JobLauncher jobLauncher, Job logAnalysisJob) {
+    public CommandLineRunner runner(JobLauncher jobLauncher, Job deathNoteWriteJob) {
         return args -> {
             JobParameters params = new JobParametersBuilder()
-                    .addString("inputFile", "log.txt")
+                    .addString("outputDir", "./")
                     .addLong("timestamp", System.currentTimeMillis()) // 유니크하게 만들기
                     .toJobParameters();
 
-            jobLauncher.run(logAnalysisJob, params);
+            jobLauncher.run(deathNoteWriteJob, params);
         };
     }
+
+    // 다중 파일 읽기
+//    @Bean
+//    public CommandLineRunner runner(JobLauncher jobLauncher, Job systemFailureJob) {
+//        return args -> {
+//            JobParameters params = new JobParametersBuilder()
+//                    .addString("inputFilePath", "critical-failures.csv,normal-failures.csv")
+//                    .addLong("timestamp", System.currentTimeMillis()) // 유니크하게 만들기
+//                    .toJobParameters();
+//
+//            jobLauncher.run(systemFailureJob, params);
+//        };
+//    }
+
+    // 단일 파일 읽기
+//    @Bean
+//    public CommandLineRunner runner(JobLauncher jobLauncher, Job systemLogJob) {
+//        return args -> {
+//            JobParameters params = new JobParametersBuilder()
+//                    .addString("inputFile", "system-events.log")
+//                    .addLong("timestamp", System.currentTimeMillis()) // 유니크하게 만들기
+//                    .toJobParameters();
+//
+//            jobLauncher.run(systemLogJob, params);
+//        };
+//    }
 
 }
