@@ -10,6 +10,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @SpringBootApplication
 public class KillBatchSystemApplication {
 
@@ -18,13 +21,20 @@ public class KillBatchSystemApplication {
 	}
 
     @Bean
-    public CommandLineRunner runner(JobLauncher jobLauncher,  @Qualifier("orderRecoveryJob") Job orderRecoveryJob) {
+    public CommandLineRunner runner(JobLauncher jobLauncher,  @Qualifier("postBlockBatchJob") Job postBlockBatchJob) {
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime start = LocalDateTime.parse("2025-11-15 03:48:47", dateTimeFormatter);
+        LocalDateTime end = LocalDateTime.parse("2025-11-18 03:38:50", dateTimeFormatter);
+
         return args -> {
             JobParameters params = new JobParametersBuilder()
+                    .addLocalDateTime("startDateTime", start)
+                    .addLocalDateTime("endDateTime", end)
                     .addLong("timestamp", System.currentTimeMillis()) // 유니크하게 만들기
                     .toJobParameters();
 
-            jobLauncher.run(orderRecoveryJob, params);
+            jobLauncher.run(postBlockBatchJob, params);
         };
     }
 
