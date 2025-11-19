@@ -5,6 +5,12 @@ spring:
       hibernate:
         format_sql: true
         highlight_sql: true
+  data:
+    mongodb:
+      database: cyberops
+    redis:
+      host: localhost
+      port: 1379
   sql:
     init:
       mode: always
@@ -18,7 +24,11 @@ spring:
     url: jdbc:postgresql://localhost:5432/postgres
     username: root
     password: password
+  main:
+    allow-bean-definition-overriding: true
 
 logging:
   level:
-    org.springframework.batch.item.database: DEBUG
+    root: INFO
+    com.system.batch: DEBUG  # 추가
+    org.springframework.batch: DEBUG  # 추가

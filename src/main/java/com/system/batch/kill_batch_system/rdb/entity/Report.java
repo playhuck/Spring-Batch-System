@@ -1,4 +1,4 @@
-package com.system.batch.kill_batch_system.db.entity;
+package com.system.batch.kill_batch_system.rdb.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

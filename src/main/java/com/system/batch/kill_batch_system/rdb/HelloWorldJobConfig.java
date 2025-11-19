@@ -1,4 +1,4 @@
-package com.system.batch.kill_batch_system.db;
+package com.system.batch.kill_batch_system.rdb;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;

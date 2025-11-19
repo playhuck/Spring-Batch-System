@@ -1,7 +1,7 @@
-package com.system.batch.kill_batch_system.db;
+package com.system.batch.kill_batch_system.rdb;
 
-import com.system.batch.kill_batch_system.db.entity.Post;
-import com.system.batch.kill_batch_system.db.entity.Report;
+import com.system.batch.kill_batch_system.rdb.entity.Post;
+import com.system.batch.kill_batch_system.rdb.entity.Report;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.system.batch.kill_batch_system.db;
+package com.system.batch.kill_batch_system.rdb;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

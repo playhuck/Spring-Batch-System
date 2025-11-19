@@ -10,6 +10,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -21,20 +22,25 @@ public class KillBatchSystemApplication {
 	}
 
     @Bean
-    public CommandLineRunner runner(JobLauncher jobLauncher,  @Qualifier("postBlockBatchJob") Job postBlockBatchJob) {
+    public CommandLineRunner runner(JobLauncher jobLauncher,  @Qualifier("aggregateHackerAttackJob") Job aggregateHackerAttackJob) {
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter dateTimeFormatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime start = LocalDateTime.parse("2025-11-15 03:48:47", dateTimeFormatter);
         LocalDateTime end = LocalDateTime.parse("2025-11-18 03:38:50", dateTimeFormatter);
 
+//        LocalDateTime time =  LocalDateTime.parse("2025-08-03", dateTimeFormatter2);
+        LocalDate time2 =  LocalDate.parse("2025-08-03", dateTimeFormatter2);
+
         return args -> {
             JobParameters params = new JobParametersBuilder()
-                    .addLocalDateTime("startDateTime", start)
-                    .addLocalDateTime("endDateTime", end)
-                    .addLong("timestamp", System.currentTimeMillis()) // 유니크하게 만들기
+//                    .addLocalDateTime("startDateTime", start)
+//                    .addLocalDateTime("endDateTime", end)
+//                    .addLocalDate("searchDate", LocalDate.now())
+//                    .addLong("timestamp", System.currentTimeMillis()) // 유니크하게 만들기
                     .toJobParameters();
 
-            jobLauncher.run(postBlockBatchJob, params);
+            jobLauncher.run(aggregateHackerAttackJob, params);
         };
     }
 
