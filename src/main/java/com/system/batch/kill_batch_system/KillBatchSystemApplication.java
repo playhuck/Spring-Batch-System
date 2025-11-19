@@ -22,7 +22,7 @@ public class KillBatchSystemApplication {
 	}
 
     @Bean
-    public CommandLineRunner runner(JobLauncher jobLauncher,  @Qualifier("aggregateHackerAttackJob") Job aggregateHackerAttackJob) {
+    public CommandLineRunner runner(JobLauncher jobLauncher,  @Qualifier("terminationRetryJob") Job terminationRetryJob) {
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         DateTimeFormatter dateTimeFormatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -40,7 +40,7 @@ public class KillBatchSystemApplication {
 //                    .addLong("timestamp", System.currentTimeMillis()) // 유니크하게 만들기
                     .toJobParameters();
 
-            jobLauncher.run(aggregateHackerAttackJob, params);
+            jobLauncher.run(terminationRetryJob, params);
         };
     }
 
